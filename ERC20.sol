@@ -1,5 +1,5 @@
 /**
-    @title ERC20 token implementation  20/10/17 12:00
+    @title ERC20 token implementation  20/10/17 19:00
     @author ND
 */
 
@@ -14,9 +14,6 @@ contract ERC20 is IERC20 {
     uint256 public _totalSupply = 0;
     mapping (address => uint256) public balances;
     mapping (address => mapping (address => uint256)) public allowance;
-
-    event Transfer(address indexed _from, address indexed _to, uint256 _value);
-    event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 
     modifier validAddress(address _address){
         require(_address != address(0));

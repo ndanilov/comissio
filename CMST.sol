@@ -1,5 +1,5 @@
 /**
-    @title Comiss.io token implementation alpha 20/10/17 12:00
+    @title Comiss.io token implementation alpha 20/10/17 19:00
     @author ND
 */
 

@@ -1,5 +1,5 @@
 /**
-    @title ERC20 token interface  20/10/17 12:00
+    @title ERC20 token interface  20/10/17 19:00
     @author ND
 */
 

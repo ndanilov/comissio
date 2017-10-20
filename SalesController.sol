@@ -1,5 +1,5 @@
 /**
-    @title Comiss.io token sales controller.  20/10/17 12:00
+    @title Comiss.io token sales controller.  20/10/17 19:00
     @author ND
 
 */
@@ -181,7 +181,7 @@ contract salesController {
     @dev must be called only from the controller UI
     @dev not earlier than presale is scheduled to end
     */
-    presaleEndUI public onlyOwner atStage(Stages.PresaleInProgress) {
+    function presaleEndUI() public onlyOwner atStage(Stages.PresaleInProgress) {
         require(now >= presaleStartTime + PRESALE_DURATION);
         presaleEnd();
     }
@@ -216,7 +216,7 @@ contract salesController {
     @dev must be called only from the controller UI
     @dev not earlier than sale is scheduled to end
     */
-    saleEndUI public onlyOwner atStage(Stages.SaleInProgress) {
+    function saleEndUI() public onlyOwner atStage(Stages.SaleInProgress) {
         require(now >= presaleStartTime + PRESALE_DURATION);
         saleEnd();
     }
@@ -292,9 +292,6 @@ contract salesController {
         currentStage = stageBeforePause;
         return(true);
     }
-
-    function isItTimeToStopPresale() internal view returns(bool);
-
 
 //Purchase functions
 
