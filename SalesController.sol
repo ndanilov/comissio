@@ -175,12 +175,24 @@ contract salesController {
         currentStage = Stages.PresaleInProgress;        
     }
     
+
+    /**
+    @dev presaleEndUI()
+    @dev must be called only from the controller UI
+    @dev not earlier than presale is scheduled to end
+    */
+    presaleEndUI public onlyOwner atStage(Stages.PresaleInProgress) {
+        require(now >= presaleStartTime + PRESALE_DURATION);
+        presaleEnd();
+    }
+
+
     /**
     @dev presaleEnd()
-    @dev must be called from the controller UI
+    @dev must be called from the presaleEndUI()
     @dev or can be called from the token purchase function when presale expires
     */
-    function presaleEnd() public onlyOwner atStage(Stages.PresaleInProgress) {
+    function presaleEnd() internal onlyOwner atStage(Stages.PresaleInProgress) {
         currentStage = Stages.PresaleFinished;        
         if(presaleEtherCollected >= PRESALE_MIN_TARGET){
             theToken.disableMinting();
@@ -200,11 +212,21 @@ contract salesController {
     }
 
     /**
+    @dev saleEndUI()
+    @dev must be called only from the controller UI
+    @dev not earlier than sale is scheduled to end
+    */
+    saleEndUI public onlyOwner atStage(Stages.SaleInProgress) {
+        require(now >= presaleStartTime + PRESALE_DURATION);
+        saleEnd();
+    }
+
+    /**
     @dev saleEnd()
     @dev must be called from the controller UI
     @dev or can be called from the token purchase function when presale expires
     */
-    function saleEnd() public onlyOwner atStage(Stages.SaleInProgress) {
+    function saleEnd() internal onlyOwner atStage(Stages.SaleInProgress) {
         currentStage = Stages.SaleFinished;
         if(presaleEtherCollected >= SALE_MIN_TARGET){
             theToken.disableMintingForever();
@@ -271,6 +293,8 @@ contract salesController {
         return(true);
     }
 
+    function isItTimeToStopPresale() internal view returns(bool);
+
 
 //Purchase functions
 
@@ -289,6 +313,7 @@ contract salesController {
     /
     /
     */
+
 
     /**@dev buyTokens internal
     @param buyer address
@@ -375,7 +400,6 @@ contract salesController {
         require(newOwner != address(0));
         owner = newOwner;
     }
-
 
     /**
     @dev changeTokenOwner use with caution!
